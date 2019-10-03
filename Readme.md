@@ -13,7 +13,7 @@ $ ./mvnw clean package
 
 Run this app:
 ```bash
-$ java -jar target/pcf-metrics-micrometer-demo.jar
+$ java -jar target/micrometer-prometheus-*.jar
 ```
 
 This app is exposing an endpoint at http://localhost:8091:
@@ -51,13 +51,10 @@ $ cf push
 ## Expose app metrics
 
 ### Using PCF Metrics Registrar
-This is a new feature available in PAS 2.4. When this feature is enabled,
-PAS will periodically scrap metrics from your app using a Prometheus
+When this feature is enabled,PAS will periodically scrap metrics from your app using a Prometheus
 compatible endpoint. You don't need to install anything else when
 using Metric Registrar, nor you need to push your metrics to some
 central metrics repository: the platform takes care of everything.
-
-Metrics are retrieved by the platform every 35 seconds by default.
 
 Create a [PCF Metrics Registrar](https://docs.pivotal.io/platform/2-7/metric-registrar/using.html) service instance:
 ```bash
@@ -68,10 +65,10 @@ $  cf register-metrics-endpoint micrometer /actuator/metrics
 $  cf register-metrics-endpoint micrometer /actuator/prometheus
 ```
 
-Bind your app to the metrics forwarder instance, and reload it:
+Bind your app to the metrics registrar instance, and reload it:
 ```bash
-$ cf bind-service pcf-metrics-micrometer-demo metrics-forwarder
-$ cf restage pcf-metrics-micrometer-demo
+$ cf bind-service micrometer-prometheus metric-registrar
+$ cf restage micrometer-prometheus
 ```
 
 You're done!
@@ -80,6 +77,7 @@ You're done!
 
 This app is now exporting its metrics to PCF Metrics.
 You can create a metric chart to show these values on the PCF Metrics Dashboard.
+I have placed the screen shot of the custom metrics in this folder
 
 
 ### TODO/Issues
