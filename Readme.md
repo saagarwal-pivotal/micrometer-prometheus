@@ -62,7 +62,7 @@ $ cf install-plugin -r CF-Community "metric-registrar"
 
 $  cf register-metrics-endpoint micrometer /actuator/metrics
 
-$  cf register-metrics-endpoint micrometer /actuator/prometheus
+$  cf register-metrics-endpoint prometheus /actuator/prometheus
 ```
 
 Bind your app to the metrics registrar instance, and reload it:
